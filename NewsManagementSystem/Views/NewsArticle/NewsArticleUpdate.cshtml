@@ -1,0 +1,99 @@
+﻿@model NewsManagementSystem.Models.NewsArticle
+
+@{
+    ViewData["Title"] = "NewsArticleUpdate";
+}
+
+
+<h1 style="text-align: center; font-weight: bold; color: #333; text-transform: uppercase;">NewsArticleUpdate</h1>
+
+<h4 style="text-align: center; font-weight: bold; color: #333;">NewsArticle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4" style="width: 70%; margin: 0 auto;">
+        <form asp-action="NewsArticleUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NewsArticleId" />
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="NewsTitle" class="control-label"></label>
+                <input asp-for="NewsTitle" class="form-control" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;" />
+                <span asp-validation-for="NewsTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="Headline" class="control-label"></label>
+                <input asp-for="Headline" class="form-control" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;" />
+                <span asp-validation-for="Headline" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="NewsContent" class="control-label"></label>
+                <textarea asp-for="NewsContent" class="form-control" style="width: 100%; height: 200px; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc; resize: vertical;"></textarea>
+                <span asp-validation-for="NewsContent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="NewsSource" class="control-label"></label>
+                <input asp-for="NewsSource" class="form-control" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;" />
+                <span asp-validation-for="NewsSource" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId ?? new SelectList(new List<Category>())" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <p>Current Category: @(Model?.Category != null ? Model.Category.CategoryName : "No Category")</p>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="NewsStatus" class="control-label">News Status</label>
+                <select asp-for="NewsStatus" class="form-control" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+                <span asp-validation-for="NewsStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="CreatedById" class="control-label">Created By</label>
+                <select asp-for="CreatedById" class="form-control" asp-items="ViewBag.CreatedById ?? new SelectList(new List<SystemAccount>())" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;"></select>
+                <span asp-validation-for="CreatedById" class="text-danger"></span>
+            </div>
+
+            <p>Current Author: @(Model?.CreatedBy != null ? Model.CreatedBy.AccountName : "Unknown")</p>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label asp-for="ModifiedDate" class="control-label"></label>
+                <input asp-for="ModifiedDate" class="form-control" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; border: 2px solid #ccc;" />
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"
+                       style="width: 100%; background-color: #007bff; border: none; font-size: 18px; padding: 12px 20px; border-radius: 8px; transition: background-color 0.3s ease-in-out, transform 0.2s;"
+                       onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+                       onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a asp-action="NewsArticleList" style="font-size: 18px; font-weight: bold; color: #007bff; text-decoration: none; transition: color 0.3s ease-in-out;"
+       onmouseover="this.style.color='#0056b3'; this.style.textDecoration='underline';"
+       onmouseout="this.style.color='#007bff'; this.style.textDecoration='none';">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

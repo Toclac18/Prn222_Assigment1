@@ -1,0 +1,88 @@
+﻿@model IEnumerable<NewsManagementSystem.Models.NewsArticle>
+
+@{
+    ViewData["Title"] = "News Articles";
+}
+
+<h1>News Articles</h1>
+
+<!-- Bộ lọc & Sắp xếp -->
+<form method="get" class="mb-3" id="filterForm">
+    <div class="row">
+        <!-- Dropdown chọn Category -->
+        <div class="col-md-3">
+            <label for="categoryId">Filter by Category:</label>
+            <select name="categoryId" id="categoryId" class="form-control">
+                <option value="">All</option>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <option value="@cat.CategoryId" selected="@(ViewBag.SelectedCategory == cat.CategoryId ? "selected" : null)">
+                        @cat.CategoryName
+                    </option>
+                }
+            </select>
+        </div>
+
+        <!-- Chọn khoảng thời gian -->
+        <div class="col-md-3">
+            <label for="startDate">Start Date:</label>
+            <input type="date" name="startDate" id="startDate" class="form-control" value="@ViewBag.StartDate" />
+        </div>
+        <div class="col-md-3">
+            <label for="endDate">End Date:</label>
+            <input type="date" name="endDate" id="endDate" class="form-control" value="@ViewBag.EndDate" />
+            <small id="dateError" class="text-danger" style="display:none;">End Date must be greater than Start Date!</small>
+        </div>
+
+        <!-- Dropdown chọn kiểu sắp xếp -->
+        <div class="col-md-3">
+            <label for="sortOrder">Sort by Date:</label>
+            <select name="sortOrder" id="sortOrder" class="form-control">
+                <option value="date_desc" selected="@(ViewBag.SortOrder == "date_desc" ? "selected" : null)">Newest First</option>
+                <option value="date_asc" selected="@(ViewBag.SortOrder == "date_asc" ? "selected" : null)">Oldest First</option>
+            </select>
+        </div>
+
+        <!-- Nút Submit & Reset -->
+        <div class="col-md-12 mt-3">
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <button type="button" class="btn btn-secondary" id="resetFilters">Reset Filters</button>
+        </div>
+    </div>
+</form>
+
+<!-- Hiển thị danh sách bài báo -->
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@item.NewsTitle</h5>
+                    <p class="text-muted">@item.CreatedDate</p>
+                    <p>@(item.NewsContent.Length > 100 ? item.NewsContent.Substring(0, 100) + "..." : item.NewsContent)</p>
+                    <a asp-action="DetailNewsArticle" asp-route-id="@item.NewsArticleId" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    document.getElementById("filterForm").addEventListener("submit", function(event) {
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        var errorMsg = document.getElementById("dateError");
+
+        if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+            errorMsg.style.display = "block";
+            event.preventDefault(); // Ngăn form gửi nếu ngày không hợp lệ
+        } else {
+            errorMsg.style.display = "none";
+        }
+    });
+
+    document.getElementById("resetFilters").addEventListener("click", function() {
+        window.location.href = "@Url.Action("NewsArticle", "Home")"; 
+    });
+</script>

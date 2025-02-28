@@ -1,0 +1,63 @@
+﻿@model IEnumerable<NewsManagementSystem.Models.NewsArticle>
+
+@{
+    ViewData["Title"] = "Danh sách bài viết";
+}
+
+<h1>Danh sách bài viết</h1>
+
+@if (TempData["UpdateDone"] != null)
+{
+    <div class="alert alert-success">@TempData["UpdateDone"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<p>
+    <a asp-action="NewsArticleCreate" class="btn btn-primary">Tạo bài viết mới</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Tóm tắt</th>
+            <th>Ngày tạo</th>
+            <th>Nguồn tin</th>
+            <th>Tác giả</th>
+            <th>Ngày cập nhật</th>
+            <th>Danh mục</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NewsTitle</td>
+                <td>@item.Headline</td>
+                <td>@item.CreatedDate</td>
+                <td>@item.NewsSource</td>
+                <td>@(item.CreatedBy != null ? item.CreatedBy.AccountName : "Không xác định")</td>
+                <td>@(item.ModifiedDate.HasValue ? item.ModifiedDate.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật")</td>
+                <td>@(item.Category != null ? item.Category.CategoryName : "Không có danh mục")</td>
+                <td>
+                    <a asp-action="NewsArticleUpdate" asp-route-id="@item.NewsArticleId" class="btn btn-warning">Sửa</a>
+                    <a asp-action="NewsArticleDetail" asp-route-id="@item.NewsArticleId" class="btn btn-info">Chi tiết</a>
+                    <form asp-action="Delete" method="post" onsubmit="return confirmDelete();" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.NewsArticleId" />
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function confirmDelete() {
+        return confirm("Bạn có chắc chắn muốn xóa bài viết này không?");
+    }
+</script>

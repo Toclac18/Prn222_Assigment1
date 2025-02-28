@@ -1,0 +1,72 @@
+﻿@model IEnumerable<NewsManagementSystem.Models.Category>
+
+@{
+    ViewData["Title"] = "ListCategory";
+}
+
+<h1>ListCategory</h1>
+
+<p>
+    <a asp-action="CreateCategory" class="btn btn-primary">Create New</a>
+</p>
+
+@if (TempData["DeleteError"] != null)
+{
+    <div class="alert alert-danger">@TempData["DeleteError"]</div>
+}
+
+@if (TempData["DeleteSuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["DeleteSuccess"]</div>
+}
+
+@if (TempData["CreateDone"] != null)
+{
+    <div class="alert alert-success">@TempData["CreateDone"]</div>
+}
+
+@if (TempData["UpdateSuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["UpdateSuccess"]</div>
+}
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.CategoryName)</th>
+            <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+            <th>Parent Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                <td class="text-center">
+                    <span class="badge @(item.IsActive == true ? "bg-success" : "bg-secondary")">
+                        @(item.IsActive == true ? "Active" : "Inactive")
+                    </span>
+                </td>
+                <td>@(item.ParentCategory != null ? item.ParentCategory.CategoryName : "No Parent")</td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center gap-2">
+                        <a asp-action="UpdateCategory" asp-route-id="@item.CategoryId" class="btn btn-warning" title="Edit">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a asp-action="DetailCategory" asp-route-id="@item.CategoryId" class="btn btn-info" title="Details">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+                        <form asp-action="DeleteCategory" method="post" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
+                            <input type="hidden" name="id" value="@item.CategoryId" />
+                            <button type="submit" class="btn btn-danger" title="Delete">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

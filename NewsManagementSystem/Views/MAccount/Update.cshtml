@@ -1,0 +1,72 @@
+﻿@model NewsManagementSystem.Models.SystemAccount
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update</h1>
+
+<h4>SystemAccount</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccountId" />
+
+            <!-- Account Name -->
+            <div class="form-group">
+                <label asp-for="AccountName" class="control-label"></label>
+                <input asp-for="AccountName" class="form-control" required />
+                <span asp-validation-for="AccountName" class="text-danger"></span>
+            </div>
+
+            <!-- Account Email -->
+            <div class="form-group">
+                <label asp-for="AccountEmail" class="control-label"></label>
+                <input asp-for="AccountEmail" class="form-control" type="email" required />
+                <span asp-validation-for="AccountEmail" class="text-danger"></span>
+            </div>
+
+            <!-- Account Role (Dropdown) -->
+            <div class="form-group">
+                <label asp-for="AccountRole" class="control-label"></label>
+                <select asp-for="AccountRole" class="form-control" required>
+                    <option value="">-- Select Role --</option>
+                    <option value="1">Staff</option>
+                    <option value="2">Lecture</option>
+                </select>
+                <span asp-validation-for="AccountRole" class="text-danger"></span>
+            </div>
+
+            <!-- Account Password -->
+            <div class="form-group">
+                <label asp-for="AccountPassword" class="control-label"></label>
+                <input asp-for="AccountPassword" class="form-control" type="text"  />
+                <span asp-validation-for="AccountPassword" class="text-danger"></span>
+            </div>
+
+            <!-- IsActive Checkbox -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="MAccount" asp-action="Accountlist">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

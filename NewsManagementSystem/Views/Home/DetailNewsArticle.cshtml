@@ -1,0 +1,54 @@
+﻿@model NewsManagementSystem.Models.NewsArticle
+
+@{
+    ViewData["Title"] = "DetailNewsArticle";
+}
+
+<div class="container mt-4">
+    <!-- Tiêu đề bài báo -->
+    <h1 class="text-center text-primary fw-bold">@Model.NewsTitle</h1>
+
+    <!-- Headline -->
+    <h4 class="text-center text-muted mt-3">"@Model.Headline"</h4>
+
+    <!-- Ngày đăng -->
+    <p class="text-center text-secondary mt-2">
+        <i class="fas fa-calendar-alt"></i> @Model.CreatedDate
+    </p>
+
+    <hr />
+
+    <!-- Nội dung bài báo -->
+    <div class="mt-4">
+        <p class="fs-5 text-justify">@Model.NewsContent</p>
+    </div>
+
+    <hr />
+
+    <!-- Thông tin khác -->
+    <div class="d-flex justify-content-between mt-3">
+        <!-- Nguồn tin tức -->
+        <p class="text-muted">
+            <i class="fas fa-link"></i>
+            <strong>Source:</strong> @Model.NewsSource
+        </p>
+
+
+        <!-- Người cập nhật -->
+        @if (Model.UpdatedById.HasValue)
+        {
+            <p class="text-muted">
+                <i class="fas fa-user-edit"></i> <strong>Updated by:</strong> @ViewBag.UpdatedByName
+            </p>
+        }
+    </div>
+
+    <hr />
+
+    <!-- Button quay lại -->
+    <div class="text-center mt-4">
+        <a asp-action="NewsArticle" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>

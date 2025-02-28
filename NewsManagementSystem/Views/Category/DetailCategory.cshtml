@@ -1,0 +1,42 @@
+﻿@model NewsManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<h1 class="mb-4 text-primary">Category Details</h1>
+
+<div class="card shadow-lg">
+    <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">@Model.CategoryName</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3 fw-bold">Category Name:</dt>
+            <dd class="col-sm-9">@Model.CategoryName</dd>
+
+            <dt class="col-sm-3 fw-bold">Description:</dt>
+            <dd class="col-sm-9">@Model.CategoryDesciption</dd>
+
+            <dt class="col-sm-3 fw-bold">Status:</dt>
+            <dd class="col-sm-9">
+                <span class="badge @(Model.IsActive == true ? "bg-success" : "bg-secondary")">
+                    @(Model.IsActive == true ? "Active" : "Inactive")
+                </span>
+            </dd>
+
+            <dt class="col-sm-3 fw-bold">Parent Category:</dt>
+            <dd class="col-sm-9">
+                @(Model.ParentCategory != null ? Model.ParentCategory.CategoryName : "No Parent")
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a asp-action="UpdateCategory" asp-route-id="@Model?.CategoryId" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <a asp-action="ListCategory" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>

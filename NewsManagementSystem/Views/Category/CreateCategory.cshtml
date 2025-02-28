@@ -1,0 +1,68 @@
+﻿@model NewsManagementSystem.Models.Category
+
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+<h1 class="text-primary"><i class="fas fa-plus-circle"></i> Create Category</h1>
+
+<div class="card shadow-sm p-4 mt-3">
+    <h4 class="text-secondary">Category Details</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="CreateCategory">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <!-- Category Name -->
+                <div class="form-group">
+                    <label asp-for="CategoryName" class="control-label font-weight-bold"></label>
+                    <input asp-for="CategoryName" class="form-control" placeholder="Enter category name" />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                </div>
+
+                <!-- Category Description -->
+                <div class="form-group">
+                    <label asp-for="CategoryDesciption" class="control-label font-weight-bold"></label>
+                    <textarea asp-for="CategoryDesciption" class="form-control" rows="3" placeholder="Enter category description"></textarea>
+                    <span asp-validation-for="CategoryDesciption" class="text-danger"></span>
+                </div>
+
+                <!-- Parent Category Dropdown -->
+                <div class="form-group">
+                    <label asp-for="ParentCategoryId" class="control-label font-weight-bold"></label>
+                    <select asp-for="ParentCategoryId" class="form-control" asp-items="ViewBag.ParentCategoryId">
+                    </select>
+                    <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+                </div>
+
+                <!-- Is Active (Checkbox) -->
+                <div class="form-group">
+                    <label class="control-label font-weight-bold">Status</label>
+                    <div>
+                        <span class="badge bg-success">Active</span>
+                        <input type="checkbox" class="form-check-input ms-2" id="IsActive" name="IsActive" value="true" checked />
+                        <input type="hidden" name="IsActive" value="false" />
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Create
+                    </button>
+                    <a asp-action="ListCategory" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

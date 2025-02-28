@@ -1,0 +1,58 @@
+﻿@model NewsManagementSystem.Models.SystemAccount
+
+@{
+    ViewData["Title"] = "UpdateProfile";
+}
+
+<h1 style="text-align: center; margin-bottom: 20px;">Update Profile</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 15px;">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div style="display: flex; justify-content: center;">
+    <div style="width: 50%; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+        <form asp-action="UpdateProfile">
+            <div asp-validation-summary="ModelOnly" style="color: red; margin-bottom: 10px;"></div>
+            <input type="hidden" asp-for="AccountId" />
+
+            <div style="margin-bottom: 15px;">
+                <label asp-for="AccountName" style="font-weight: bold;"></label>
+                <input asp-for="AccountName" class="form-control" style="border-radius: 5px;" />
+                <span asp-validation-for="AccountName" style="color: red;"></span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label asp-for="AccountEmail" style="font-weight: bold;"></label>
+                <input asp-for="AccountEmail" class="form-control" style="border-radius: 5px; background-color: #e9ecef;" readonly />
+                <span asp-validation-for="AccountEmail" style="color: red;"></span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label asp-for="AccountRole" style="font-weight: bold;"></label>
+                <input asp-for="AccountRole" class="form-control" style="border-radius: 5px; background-color: #e9ecef;" readonly />
+                <span asp-validation-for="AccountRole" style="color: red;"></span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label asp-for="AccountPassword" style="font-weight: bold;"></label>
+                <input asp-for="AccountPassword" type="text" class="form-control" style="border-radius: 5px;" />
+                <span asp-validation-for="AccountPassword" style="color: red;"></span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold; display: flex; align-items: center;">
+                    <input class="form-check-input" asp-for="IsActive" disabled style="margin-right: 5px;" />
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+
+            <div style="text-align: center;">
+                <input type="submit" value="Save" class="btn btn-primary" style="padding: 10px 20px; border-radius: 5px; font-size: 16px;" />
+            </div>
+        </form>
+    </div>
+</div>

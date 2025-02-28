@@ -1,0 +1,46 @@
+﻿@model NewsManagementSystem.Models.SystemAccount
+
+@{
+    ViewData["Title"] = "ViewProfile";
+}
+
+<h1 style="text-align: center; margin-bottom: 20px;">View Profile</h1>
+
+<div style="display: flex; justify-content: center;">
+    <div style="width: 50%; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #f9f9f9;">
+        <h4 style="text-align: center;">System Account</h4>
+        <hr />
+        <dl style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between;">
+                <dt style="font-weight: bold;">@Html.DisplayNameFor(model => model.AccountName)</dt>
+                <dd>@Html.DisplayFor(model => model.AccountName)</dd>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <dt style="font-weight: bold;">@Html.DisplayNameFor(model => model.AccountEmail)</dt>
+                <dd style="background-color: #e9ecef; padding: 5px 10px; border-radius: 5px;">@Html.DisplayFor(model => model.AccountEmail)</dd>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <dt style="font-weight: bold;">@Html.DisplayNameFor(model => model.AccountRole)</dt>
+                <dd style="background-color: #e9ecef; padding: 5px 10px; border-radius: 5px;">@Html.DisplayFor(model => model.AccountRole)</dd>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <dt style="font-weight: bold;">@Html.DisplayNameFor(model => model.AccountPassword)</dt>
+                <dd>@Html.DisplayFor(model => model.AccountPassword)</dd>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <dt style="font-weight: bold;">@Html.DisplayNameFor(model => model.IsActive)</dt>
+                <dd>
+                    <input type="checkbox" @(Model.IsActive ? "checked" : "") disabled style="margin-left: 10px;" />
+                </dd>
+            </div>
+        </dl>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a asp-action="UpdateProfile" class="btn btn-primary" style="padding: 10px 20px; border-radius: 5px; font-size: 16px;">Edit</a>
+        </div>
+    </div>
+</div>

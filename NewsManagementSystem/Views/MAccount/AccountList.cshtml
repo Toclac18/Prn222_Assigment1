@@ -1,0 +1,84 @@
+﻿@model IEnumerable<NewsManagementSystem.Models.SystemAccount>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountRole)
+            </th>
+            <th>
+                Update
+            </th>
+            <th>
+                Detail
+            </th>
+            <th>
+                Inactice
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountName)
+            </td>
+            <td>
+                @if (item.AccountRole == 1)
+                {
+                    <p>Staff</p>
+                }else{
+                    <p>Lecturer </p>
+                }
+            </td>
+            <td>
+                <a asp-action="Update" asp-route-id="@item.AccountId">Update</a>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AccountId">Details</a>
+            </td>
+            <td>
+                <button class="btn btn-danger ms-2"
+                        onclick="confirmToggleAccount(@item.AccountId, '@item.AccountName', false)"
+                        style="@(item.IsActive ? "display:inline-block;" : "display:none;")">
+                    Inactivate
+                </button>
+
+                <button class="btn btn-success ms-2"
+                        onclick="confirmToggleAccount(@item.AccountId, '@item.AccountName', true)"
+                        style="@(item.IsActive ? "display:none;" : "display:inline-block;")">
+                    Activate
+                </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    function confirmToggleAccount(accountId, accountName, activate) {
+        let action = activate ? "kích hoạt" : "khóa";
+        if (confirm(`Bạn có chắc muốn ${action} tài khoản "${accountName}" không?`)) {
+            window.location.href = `/MAccount/ToggleAccountStatus?id=${accountId}`;
+        }
+    }
+</script>
